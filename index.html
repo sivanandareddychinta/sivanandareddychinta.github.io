@@ -1,8 +1,558 @@
-<html>
-  <head>
-    <title> First Git Page </title>
-  </head>
-  <body>
-    <p> Helloo.. </p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Veera Venkata Sivananda Reddy Chinta — Java Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F5F2ED;
+      --ink: #1A1612;
+      --muted: #7A7167;
+      --accent: #C8490A;
+      --line: #D9D3CB;
+      --card: #EDEAE4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 24px;
+      padding-bottom: 40px;
+      border-bottom: 1.5px solid var(--ink);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.1s;
+    }
+
+    .name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .name em { color: var(--accent); font-style: italic; }
+
+    .title-tag {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .contact-links a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 11px;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .contact-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .contact-links a:hover { color: var(--accent); }
+    .contact-links a:hover::after { width: 100%; }
+
+    .contact-plain {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    section {
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.2s; }
+    section:nth-of-type(2) { animation-delay: 0.28s; }
+    section:nth-of-type(3) { animation-delay: 0.36s; }
+    section:nth-of-type(4) { animation-delay: 0.44s; }
+    section:nth-of-type(5) { animation-delay: 0.52s; }
+    section:nth-of-type(6) { animation-delay: 0.58s; }
+    section:nth-of-type(7) { animation-delay: 0.64s; }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* BADGE STRIP */
+    .badge-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.18s;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 4px 11px;
+    }
+
+    /* ABOUT */
+    .about-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(16px, 2.3vw, 20px);
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    /* EXPERIENCE */
+    .job {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .job:first-of-type { border-top: 1px solid var(--line); }
+
+    .job-period { font-size: 11px; color: var(--muted); display: block; }
+    .job-company { font-size: 11px; font-weight: 500; color: var(--accent); margin-top: 5px; display: block; }
+    .job-client { font-size: 11px; color: var(--muted); margin-top: 3px; display: block; font-style: italic; line-height: 1.5; }
+
+    .job-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .job-desc { color: var(--muted); font-size: 12.5px; line-height: 1.75; }
+    .job-desc ul { padding-left: 16px; margin-top: 6px; }
+    .job-desc li { margin-bottom: 5px; }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+      gap: 13px;
+    }
+
+    .skill-group {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 17px 19px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-group:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .skill-group-name {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .skill-list { display: flex; flex-wrap: wrap; gap: 5px; }
+
+    .skill-tag {
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      padding: 2px 8px;
+    }
+
+    /* CERTIFICATIONS */
+    .cert-list { display: flex; flex-direction: column; gap: 11px; }
+
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 16px 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .cert-item:hover { border-color: var(--accent); transform: translateX(4px); }
+
+    .cert-icon { font-size: 20px; flex-shrink: 0; }
+    .cert-name { font-family: 'DM Serif Display', serif; font-size: 15px; }
+    .cert-issuer { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* EDUCATION */
+    .edu-item {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 24px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .edu-item:first-of-type { border-top: 1px solid var(--line); }
+    .edu-year { font-size: 11px; color: var(--muted); padding-top: 3px; }
+    .edu-degree { font-family: 'DM Serif Display', serif; font-size: 17px; line-height: 1.3; }
+    .edu-school { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    /* COMPETENCIES */
+    .comp-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .comp-tag {
+      font-size: 12px;
+      border: 1.5px solid var(--ink);
+      padding: 6px 16px;
+      transition: background 0.2s, color 0.2s;
+      cursor: default;
+    }
+
+    .comp-tag:hover { background: var(--ink); color: var(--bg); }
+
+    /* FOOTER */
+    footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1.5px solid var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.75s;
+    }
+
+    .footer-note { font-size: 11px; color: var(--muted); }
+
+    .footer-badge {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 6px; height: 6px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 48px 20px; }
+      header { grid-template-columns: 1fr; }
+      .contact-links { align-items: flex-start; }
+      .job, .edu-item { grid-template-columns: 1fr; gap: 6px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <h1 class="name">Veera Venkata Sivananda Reddy <em>Chinta</em> </h1>
+      <p class="title-tag">Java Developer · Microservices · Spring Boot · Cloud & Distributed Systems</p>
+    </div>
+    <nav class="contact-links">
+      <a href="mailto:sivanandareddy135@gmail.com">sivanandareddy135@gmail.com</a>
+      <a href="https://linkedin.com/in/veeravenkata-sivanandareddy-chinta" target="_blank">linkedin/veeravenkata-sivanandareddy-chinta</a>
+      <a href="tel:+917032555759">+91 7032555759</a>
+      <span class="contact-plain">📍 Kakinada, Andhra Pradesh, India</span>
+    </nav>
+  </header>
+
+  <!-- CORE BADGES -->
+  <div class="badge-strip">
+    <span class="badge">Java</span>
+    <span class="badge">Spring Boot</span>
+    <span class="badge">Microservices</span>
+    <span class="badge">Apache Kafka</span>
+    <span class="badge">REST APIs</span>
+    <span class="badge">AWS EC2 · EKS</span>
+    <span class="badge">Apache Spark</span>
+    <span class="badge">Kubernetes</span>
+    <span class="badge">Docker</span>
+    <span class="badge">Oracle · MongoDB</span>
+    <span class="badge">Multithreading</span>
+    <span class="badge">CI/CD · Ansible</span>
+    <span class="badge">Blue-Green Deploy</span>
+    <span class="badge">Agile / Scrum</span>
+  </div>
+
+  <!-- ABOUT -->
+  <section>
+    <p class="section-label">About</p>
+    <p class="about-text">
+      Results-driven Java Developer with 7+ years of experience in designing, developing, and maintaining
+      high-volume distributed microservices on enterprise streaming platforms. Deep expertise in
+      Spring Boot, Apache Kafka, AWS, and container orchestration with Kubernetes &amp; Docker.
+      Proven track record in zero-downtime deployments, legacy system migrations, and production
+      root-cause analysis. AWS Certified with hands-on Agile/Scrum delivery experience.
+    </p>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <p class="section-label">Experience</p>
+    <div class="job">
+      <div>
+        <span class="job-period">Jul 2018 — Present &nbsp;·&nbsp; 7 yrs</span>
+        <span class="job-company">Infosys Limited</span>
+        <span class="job-client">Client: Apple Inc, USA<br>Project: AML – Streaming Data Platform (AML-SDP)</span>
+      </div>
+      <div>
+        <h3 class="job-title">Technology Lead </h3>
+        <div class="job-desc">
+          <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;margin-top:12px;">Application Development &amp; Enhancements</p>
+          <ul>
+            <li>Designed, developed, and tested new features and enhancements across multiple enterprise applications, delivering scalable, high-quality solutions aligned with business goals.</li>
+            <li>Wrote clean, maintainable code and reusable utilities while adhering to best practices; developed comprehensive unit tests to ensure code reliability.</li>
+          </ul>
+          <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;margin-top:14px;">System Integration &amp; Cloud Migration</p>
+          <ul>
+            <li>Led the onboarding of new applications and interfaces, ensuring seamless integration with existing ecosystems.</li>
+            <li>Spearheaded application migrations from on-premise data centers to AWS Cloud, ensuring security, compliance, and efficient resource usage; managed Spark and Kafka framework upgrades and full code refactoring.</li>
+          </ul>
+          <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;margin-top:14px;">Distributed Systems &amp; Infrastructure</p>
+          <ul>
+            <li>Managed applications deployed across distributed clusters, virtual machines, and remote data centers, ensuring continuous availability and robust failover mechanisms.</li>
+            <li>Built &amp; deployed containerized apps using Docker, orchestrated with Kubernetes on AWS EKS; managed EC2 instances, auto-scaling groups, and blue-green deployments for zero-downtime releases.</li>
+          </ul>
+          <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;margin-top:14px;">Production Support &amp; Root Cause Analysis</p>
+          <ul>
+            <li>Delivered critical production support by diagnosing complex issues through log analysis, data review, and multi-angle debugging; provided rapid workarounds and long-term permanent fixes to improve SLA compliance.</li>
+          </ul>
+          <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;margin-top:14px;">Architecture, Design &amp; Performance</p>
+          <ul>
+            <li>Developed high-level design documents, performed POCs, and proposed improvements to existing architectures; identified design flaws and implemented strategic enhancements.</li>
+            <li>Tuned application performance by optimizing Java code and MongoDB queries based on non-functional requirements.</li>
+          </ul>
+          <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;margin-top:14px;">Requirements, Stakeholder Collaboration &amp; Go-Live</p>
+          <ul>
+            <li>Collaborated with business stakeholders to gather and analyze system requirements; created use case diagrams and presentations to facilitate shared understanding.</li>
+            <li>Actively participated in go-live planning and execution, coordinating across teams to ensure smooth rollouts and minimal business disruption.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNICAL SKILLS -->
+  <section>
+    <p class="section-label">Technical Skills</p>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <span class="skill-group-name">Languages</span>
+        <div class="skill-list">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-group-name">Frameworks</span>
+        <div class="skill-list">
+          <span class="skill-tag">Spring Boot</span>
+          <span class="skill-tag">Spring MVC</span>
+          <span class="skill-tag">JDBC</span>
+          <span class="skill-tag">REST WS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-group-name">Distributed & Streaming</span>
+        <div class="skill-list">
+          <span class="skill-tag">Apache Kafka</span>
+          <span class="skill-tag">Apache Spark</span>
+          <span class="skill-tag">Kubernetes</span>
+          <span class="skill-tag">Rubix</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-group-name">Cloud & DevOps</span>
+        <div class="skill-list">
+          <span class="skill-tag">AWS</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Ansible</span>
+          <span class="skill-tag">CI/CD</span>
+          <span class="skill-tag">Maven</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-group-name">Databases</span>
+        <div class="skill-list">
+          <span class="skill-tag">Oracle</span>
+          <span class="skill-tag">MongoDB</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-group-name">IDEs & VCS</span>
+        <div class="skill-list">
+          <span class="skill-tag">IntelliJ</span>
+          <span class="skill-tag">Eclipse</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">STS</span>
+          <span class="skill-tag">Git</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-group-name">Methodologies</span>
+        <div class="skill-list">
+          <span class="skill-tag">Agile</span>
+          <span class="skill-tag">Scrum</span>
+          <span class="skill-tag">Waterfall</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section>
+    <p class="section-label">Certifications</p>
+    <div class="cert-list">
+      <div class="cert-item">
+        <span class="cert-icon">☁️</span>
+        <div>
+          <div class="cert-name">AWS Certified Cloud Practitioner (CLF-C01)</div>
+          <div class="cert-issuer">Amazon Web Services</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <span class="cert-icon">🏅</span>
+        <div>
+          <div class="cert-name">Infosys Certified AWS Cloud Practitioner</div>
+          <div class="cert-issuer">Infosys Limited</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <span class="cert-icon">🏅</span>
+        <div>
+          <div class="cert-name">Infosys Certified AWS Developer Associate</div>
+          <div class="cert-issuer">Infosys Limited</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <p class="section-label">Education</p>
+    <div class="edu-item">
+      <span class="edu-year">2014 — 2018</span>
+      <div>
+        <h3 class="edu-degree">B.Tech — Computer Science</h3>
+        <p class="edu-school">KL University, Guntur</p>
+      </div>
+    </div>
+    <div class="edu-item">
+      <span class="edu-year">2012 — 2014</span>
+      <div>
+        <h3 class="edu-degree">Intermediate — MPC</h3>
+        <p class="edu-school">Narayana Junior College, Kakinada</p>
+      </div>
+    </div>
+    <div class="edu-item">
+      <span class="edu-year">2012</span>
+      <div>
+        <h3 class="edu-degree">Secondary School (SSC)</h3>
+        <p class="edu-school">Divya Teja EM High School, G. Mamidada</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETENCIES -->
+  <section>
+    <p class="section-label">Competencies</p>
+    <div class="comp-grid">
+      <span class="comp-tag">System Design</span>
+      <span class="comp-tag">Root Cause Analysis</span>
+      <span class="comp-tag">Performance Tuning</span>
+      <span class="comp-tag">Zero-Downtime Deploy</span>
+      <span class="comp-tag">POC & Architecture</span>
+      <span class="comp-tag">Automation</span>
+      <span class="comp-tag">Mentoring</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-note">Last updated March 2026</span>
+    <!-- <span class="footer-badge"><span class="dot"></span> Open to new opportunities</span> -->
+  </footer>
+
+</div>
+</body>
 </html>
